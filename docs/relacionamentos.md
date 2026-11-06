@@ -2,11 +2,11 @@
 
 ## 1. Herança entre Usuario, Aluno e Professor
 
-A classe `Usuario` é uma classe abstrata que representa os usuários do sistema de biblioteca[cite: 6]. Ela possui os atributos comuns a todos os usuários: identificador, nome e matrícula.
+A classe `Usuario` é uma classe abstrata que representa os usuários do sistema de biblioteca. Ela possui os atributos comuns a todos os usuários: identificador, nome e matrícula.
 
-As classes `Aluno` e `Professor` herdam de `Usuario`, compartilhando seus atributos e especializando os comportamentos relacionados aos empréstimos[cite: 6].
+As classes `Aluno` e `Professor` herdam de `Usuario`, compartilhando seus atributos e especializando os comportamentos relacionados aos empréstimos.
 
-Essa herança permite que cada tipo de usuário tenha regras específicas, como prazo de devolução, limite de empréstimos e cálculo de multas[cite: 6, 7].
+Essa herança permite que cada tipo de usuário tenha regras específicas, como prazo de devolução, limite de empréstimos e cálculo de multas.
 
 ## 2. Agregação entre Usuario e Emprestimo
 
