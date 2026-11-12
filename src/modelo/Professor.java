@@ -13,11 +13,11 @@ public class Professor extends Usuario {
     }
 
     @Override
-    public float calcularMulta(int diasAtraso) {
+    public double calcularMulta(int diasAtraso) {
         if(diasAtraso <= 0){
             return 0.0;
         }
-        final float taxaProf = 0.5;
+        final double taxaProf = 0.5;
         return diasAtraso * taxaProf;
     }
 
