@@ -3,13 +3,15 @@ package modelo;
 
 public class Professor extends Usuario {
 
+    private static final taxaProf = 0.5;
+
     public Professor(int id, String nome, String matricula) {
         super(id, nome, matricula);
     }
 
     @Override
     public int getPrazoDias() {
-        return 14;
+        return 15;
     }
 
     @Override
@@ -17,7 +19,6 @@ public class Professor extends Usuario {
         if(diasAtraso <= 0){
             return 0.0;
         }
-        final double taxaProf = 0.5;
         return diasAtraso * taxaProf;
     }
 
