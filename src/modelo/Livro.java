@@ -1,7 +1,10 @@
 package modelo;
 
+import excecoes.LivroIndisponivelException;
+
 public class Livro {
 
+<<<<<<< HEAD
     private final int id;
     private final String titulo;
     private final String autor;
@@ -13,6 +16,15 @@ public class Livro {
         if (id <= 0) {
             throw new IllegalArgumentException("O id do livro deve ser maior que zero.");
         }
+=======
+    private int id;
+    private String titulo;
+    private String autor;
+    private String isbn;
+    private int quantidadeExemplares;  
+
+    public Livro(int id, String titulo, String autor, String isbn, int quantidadeExemplares) {
+>>>>>>> 31e2851fe71a330764d4461022902cd7d8393d48
         this.id = id;
         this.titulo = validarTexto(titulo, "título");
         this.autor = validarTexto(autor, "autor");
@@ -48,13 +60,23 @@ public class Livro {
         return quantidadeDeExemplares;
     }
 
+<<<<<<< HEAD
     public void emprestarExemplar() {
         if (quantidadeDeExemplares <= 0) {
             throw new EstoqueInsuficienteException("Não há exemplares disponíveis para empréstimo.");
         }
         quantidadeDeExemplares--;
+=======
+    
+    public void emprestarExemplar() throws LivroIndisponivelException {
+        if (quantidadeExemplares == 0) {
+            throw new LivroIndisponivelException("O livro \"" + titulo + "\" não tem exemplar disponível.");
+        }
+        quantidadeExemplares--;
+>>>>>>> 31e2851fe71a330764d4461022902cd7d8393d48
     }
 
+    
     public void devolverExemplar() {
         if (quantidadeDeExemplares >= quantidadeTotalExemplares) {
             throw new RegraNegocioException(
@@ -68,5 +90,45 @@ public class Livro {
             throw new IllegalArgumentException("O " + campo + " do livro é obrigatório.");
         }
         return valor.trim();
+    }
+
+    
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public int getQuantidadeExemplares() {
+        return quantidadeExemplares;
+    }
+
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + id + "] " + titulo + " - " + autor + " (" + quantidadeExemplares + " disponível(is))";
     }
 }
