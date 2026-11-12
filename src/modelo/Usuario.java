@@ -23,7 +23,7 @@ public abstract class Usuario {
 
     public abstract int getPrazoDias();
 
-    public abstract float calcularMulta(int diasAtraso);
+    public abstract double calcularMulta(int diasAtraso);
 
     public abstract int getLimiteEmprestimos();
 }
