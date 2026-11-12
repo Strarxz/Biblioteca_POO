@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 
 package modelo;
 
@@ -48,4 +46,3 @@ public abstract class Usuario {
 
     public abstract int getLimiteEmprestimos();
 }
->>>>>>> 31e2851fe71a330764d4461022902cd7d8393d48

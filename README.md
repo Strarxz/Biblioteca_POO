@@ -1,65 +1,59 @@
-# Diagrama de Classes
+<div align="center">
+  <img src="assets/banner.png" width="100%">
+</div>
+  
+  <div align="center">
 
-```mermaid
-classDiagram
-    class Usuario {
-        -int id
-        -String nome
-        -String matricula
-        -List~Emprestimo~ emprestimosAtivos
-        -BigDecimal pendenciaFinanceira
-        +getPrazoDias() int
-        +getLimiteEmprestimos() int
-        +getTaxaMultaDiaria() BigDecimal
-        +isBloqueado(dataAtual) boolean
-        +quitarPendencia()
-    }
+# 📚 Library System
+### Sistema de Gerenciamento de Biblioteca
 
-    class Aluno {
-        +getPrazoDias() int
-        +getLimiteEmprestimos() int
-        +getTaxaMultaDiaria() BigDecimal
-    }
+*Projeto desenvolvido para a disciplina de Programação Orientada a Objetos (POO).*
 
-    class Professor {
-        +getPrazoDias() int
-        +getLimiteEmprestimos() int
-        +getTaxaMultaDiaria() BigDecimal
-    }
+![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-74B9E7?style=flat-square&logo=sqlite&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Em_Desenvolvimento-F4B8D3?style=flat-square)
 
-    class Livro {
-        -int id
-        -String titulo
-        -String autor
-        -String isbn
-        -int quantidadeTotalExemplares
-        -int quantidadeDeExemplares
-        +emprestarExemplar()
-        +devolverExemplar()
-    }
+</div>
 
-    class Emprestimo {
-        -LocalDate dataEmprestimo
-        -LocalDate dataDevolucaoPrevista
-        -LocalDate dataDevolucaoReal
-        -BigDecimal valorMulta
-        -Status status
-        +realizarEmprestimo() boolean
-        +finalizarDevolucao(dataAtual)
-        +calcularMulta() BigDecimal
-    }
+---
 
-    Usuario <|-- Aluno
-    Usuario <|-- Professor
-    Usuario "1" --> "0..*" Emprestimo : realiza
-    Livro "1" --> "0..*" Emprestimo : associado
-```
+### 🌷 Sobre o projeto
 
-# Regras de Negócio Implementadas
+O **Library System** é um sistema de gerenciamento de biblioteca desenvolvido em Java, com o objetivo de administrar livros, usuários e empréstimos.
 
-- Usuários têm identificador positivo, nome e matrícula obrigatórios. `Usuario` é concreto; seu comportamento padrão equivale ao perfil de aluno. `Aluno` e `Professor` especializam prazo, limite e taxa sem acrescentar atributos.
-- Alunos podem manter até 3 empréstimos simultâneos, com prazo de 7 dias e multa de R$ 1,00 por dia de atraso. Professores podem manter até 5 empréstimos simultâneos, com prazo de 15 dias e multa de R$ 0,50 por dia.
-- A data de devolução prevista deve corresponder ao prazo do perfil. O empréstimo é recusado se o usuário estiver bloqueado, atingir seu limite ou não houver exemplares disponíveis.
-- Um livro vencido bloqueia novos empréstimos. Na devolução atrasada, a multa é calculada em centavos e registrada como pendência financeira; o usuário permanece bloqueado até quitar essa pendência. A quitação parcial é aceita, mas o bloqueio continua enquanto houver saldo.
-- A devolução restaura o estoque, mas nunca permite que exemplares disponíveis excedam a quantidade total cadastrada. Empréstimos e devoluções inválidos lançam exceções com mensagens explicativas.
-- Livros exigem identificador positivo, ISBN, título e autor não vazios e quantidade não negativa. Campos ausentes ou inválidos são rejeitados com `IllegalArgumentException`.
+O sistema permitirá cadastrar alunos e professores, registrar empréstimos e devoluções, controlar a disponibilidade de livros e calcular multas por atraso.
+
+### 🛠️ Tecnologias
+
+- **Java** — linguagem principal.
+- **Java Swing** — interface gráfica.
+- **SQLite** — banco de dados.
+- **JDBC** — conexão com o banco de dados.
+
+### 📖 Funcionalidades
+
+- Cadastro e gerenciamento de livros e usuários.
+- Registro de empréstimos e devoluções.
+- Controle de exemplares disponíveis.
+- Cálculo de prazos e multas por atraso.
+- Consulta de empréstimos em aberto.
+- Busca de livros por título ou autor.
+- Geração de relatórios CSV (extra).
+
+### 🧩 Conceitos de POO
+
+O projeto aplicará **abstração, herança, polimorfismo, encapsulamento e sobrecarga de métodos**, utilizando como classes principais:
+
+`Usuario` • `Aluno` • `Professor` • `Livro` • `Emprestimo`
+
+### 🚀 Status
+
+**Em desenvolvimento.** As funcionalidades serão implementadas gradualmente.
+
+---
+
+<div align="center">
+
+*Feito com ☕ Java e 📚 conhecimento.*
+
+</div>
