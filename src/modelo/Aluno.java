@@ -3,6 +3,8 @@ package modelo;
 
 public class Aluno extends Usuario {
 
+    private static final double taxaAluno = 1.0;
+
     public Aluno(int id, String nome, String matricula) {
         super(id, nome, matricula);
     }
@@ -18,7 +20,6 @@ public class Aluno extends Usuario {
         if(diasAtraso <= 0){
             return 0.0;
         }
-        final double taxaAluno = 1.0;
         return diasAtraso * taxaAluno;
     }
 
