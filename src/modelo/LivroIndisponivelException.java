@@ -1,7 +1,7 @@
 package modelo;
 
-public class LivroIndiponivelException extends Exception {
-  public LivroIndiponivelException(String mensagem){
+public class LivroIndisponivelException extends Exception {
+  public LivroIndisponivelException(String mensagem){
     super(mensagem);
   }
 }
