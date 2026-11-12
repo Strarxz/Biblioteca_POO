@@ -1,0 +1,97 @@
+@startuml Biblioteca
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide circle
+
+class Biblioteca {
+  - livros: List<Livro>
+  - usuarios: List<Usuario>
+  - emprestimos: List<Emprestimo>
+  - proximoIdEmprestimo: int
+  + cadastrarLivro(livro: Livro): void
+  + cadastrarUsuario(usuario: Usuario): void
+  + emprestar(usuario: Usuario, livro: Livro): Emprestimo
+  + devolver(emprestimo: Emprestimo, dataAtual: LocalDate): double
+  + buscar(titulo: String): List<Livro>
+  + buscar(titulo: String, autor: String): List<Livro>
+  + removerLivro(id: int): void
+}
+
+abstract class Usuario <<abstract>> {
+  - prazoDias: int
+  - id: int
+  - nome: String
+  - matricula: String
+  + getPrazoDias(): int
+  + {abstract} getLimiteEmprestimos(): int
+  + {abstract} getTaxaMultaDiaria(): double
+}
+
+class Aluno {
+  - {static} PRAZO_DIAS: int = 7
+  - {static} TAXA_MULTA_DIARIA: double = 1.00
+  - {static} LIMITE_EMPRESTIMOS: int = 3
+  + getLimiteEmprestimos(): int
+  + getTaxaMultaDiaria(): double
+}
+
+class Professor {
+  - {static} PRAZO_DIAS: int = 15
+  - {static} TAXA_MULTA_DIARIA: double = 0.50
+  - {static} LIMITE_EMPRESTIMOS: int = 5
+  + getLimiteEmprestimos(): int
+  + getTaxaMultaDiaria(): double
+}
+
+class Emprestimo {
+  + {static} ABERTO: String = "ABERTO"
+  + {static} DEVOLVIDO: String = "DEVOLVIDO"
+  - id: int
+  - dataEmprestimo: LocalDate
+  - dataDevolucaoPrevista: LocalDate
+  - dataDevolucaoReal: LocalDate
+  - valorMulta: double
+  - status: String
+  + finalizarDevolucao(dataAtual: LocalDate): void
+  + calcularMulta(): double
+}
+
+class Livro {
+  - id: int
+  - titulo: String
+  - autor: String
+  - isbn: String
+  - quantidadeExemplares: int
+  + emprestarExemplar(): void
+  + devolverExemplar(): void
+}
+
+package excecoes {
+  class LivroIndisponivelException <<exception>>
+  class LimiteEmprestimosException <<exception>>
+  class RegistroNaoEncontradoException <<exception>>
+  class OperacaoInvalidaException <<exception>>
+}
+
+Biblioteca ..> excecoes : <<throws>>
+Emprestimo ..> excecoes : <<throws>>
+Livro ..> excecoes : <<throws>>
+
+Usuario <|-- Aluno
+Usuario <|-- Professor
+
+Biblioteca "1" o-- "*" Usuario
+Biblioteca "1" *-- "*" Emprestimo
+Biblioteca "1" o-- "*" Livro
+
+Emprestimo "*" o-left- "1" Usuario
+Emprestimo "*" o-right- "1" Livro
+
+legend right
+  Sublinhado: membro static (constante).
+  Itálico: método abstrato.
+  Losango cheio: composição; losango vazio: agregação.
+  Construtores, getters, setters e toString() foram omitidos.
+endlegend
+
+@enduml
