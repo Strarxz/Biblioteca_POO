@@ -22,7 +22,7 @@ public class Professor extends Usuario {
     }
 
     @Override
-    public int getLimiteEmprestimo() {
+    public int getLimiteEmprestimos() {
         return 5;
     }
 }
