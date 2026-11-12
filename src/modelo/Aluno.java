@@ -23,7 +23,7 @@ public class Aluno extends Usuario {
     }
 
     @Override
-    public int getLimiteEmprestimo() {
+    public int getLimiteEmprestimos() {
         return 3;
     }
 }
