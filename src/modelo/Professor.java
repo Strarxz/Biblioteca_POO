@@ -1,5 +1,6 @@
-
 package modelo;
+
+import java.math.BigDecimal;
 
 public class Professor extends Usuario {
 
@@ -9,16 +10,16 @@ public class Professor extends Usuario {
 
     @Override
     public int getPrazoDias() {
-        
+        return 15;
     }
 
     @Override
-    public float calcularMulta(int diasAtraso) {
-        
+    public int getLimiteEmprestimos() {
+        return 5;
     }
 
     @Override
-    public int getLimiteEmprestimo() {
-        
+    public BigDecimal getTaxaMultaDiaria() {
+        return new BigDecimal("0.50");
     }
 }
