@@ -7,10 +7,10 @@ public abstract class Usuario {
     private String matricula;
     private int id;
 
-    public Usuario(String nome, String matricula, int id) {
+    public Usuario(int id, String nome, String matricula) {
+        this.id = id;
         this.nome = nome;
         this.matricula = matricula;
-        this.id = id;
     }
 
     public String getNome() {
