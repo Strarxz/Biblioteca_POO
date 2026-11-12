@@ -10,18 +10,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * O "balcão" da biblioteca: guarda as listas e aplica as regras
- * que envolvem mais de uma classe ao mesmo tempo.
- */
 public class Biblioteca {
 
     private List<Livro> livros = new ArrayList<>();
     private List<Usuario> usuarios = new ArrayList<>();
     private List<Emprestimo> emprestimos = new ArrayList<>();
-    private int proximoIdEmprestimo = 1;   // gera o id de cada novo empréstimo
-
-    // ---------- Cadastros ----------
+    private int proximoIdEmprestimo = 1;
 
     public void cadastrarLivro(Livro livro) {
         livros.add(livro);
@@ -31,13 +25,6 @@ public class Biblioteca {
         usuarios.add(usuario);
     }
 
-    // ---------- Empréstimo e devolução ----------
-
-    /**
-     * Empresta um livro para um usuário (RF1.3).
-     * Confere o limite do usuário (RN1.3) e se o livro tem exemplar livre (RN1.4).
-     * Se algo der errado, lança a exceção e nada é alterado.
-     */
     public Emprestimo emprestar(Usuario usuario, Livro livro)
             throws LimiteEmprestimosException, LivroIndisponivelException {
 
@@ -46,7 +33,7 @@ public class Biblioteca {
                     + " já atingiu o limite de " + usuario.getLimiteEmprestimos() + " empréstimos.");
         }
 
-        livro.emprestarExemplar();   // lança LivroIndisponivelException se não houver exemplar
+        livro.emprestarExemplar();
 
         Emprestimo emprestimo = new Emprestimo(proximoIdEmprestimo, usuario, livro, LocalDate.now());
         proximoIdEmprestimo++;
@@ -54,18 +41,12 @@ public class Biblioteca {
         return emprestimo;
     }
 
-    /**
-     * Registra a devolução (RF1.4) e devolve o valor da multa para mostrar ao usuário.
-     */
     public double devolver(Emprestimo emprestimo, LocalDate dataAtual) throws OperacaoInvalidaException {
-        emprestimo.finalizarDevolucao(dataAtual);       // lança exceção se já foi devolvido
+        emprestimo.finalizarDevolucao(dataAtual);
         emprestimo.getLivro().devolverExemplar();
         return emprestimo.getValorMulta();
     }
 
-    // ---------- Busca (sobrecarga) ----------
-
-    /** Busca livros cujo título contém o texto informado (RF1.5). */
     public List<Livro> buscar(String titulo) {
         List<Livro> resultado = new ArrayList<>();
         for (Livro livro : livros) {
@@ -76,7 +57,6 @@ public class Biblioteca {
         return resultado;
     }
 
-    /** Busca livros pelo título e pelo autor ao mesmo tempo (RF1.5). */
     public List<Livro> buscar(String titulo, String autor) {
         List<Livro> resultado = new ArrayList<>();
         for (Livro livro : buscar(titulo)) {
@@ -87,12 +67,6 @@ public class Biblioteca {
         return resultado;
     }
 
-    // ---------- Remoção ----------
-
-    /**
-     * Remove um livro do acervo.
-     * Não deixa remover se o id não existir ou se o livro estiver emprestado (RN1.5).
-     */
     public void removerLivro(int id) throws RegistroNaoEncontradoException, OperacaoInvalidaException {
         Livro livro = null;
         for (Livro l : livros) {
@@ -113,10 +87,8 @@ public class Biblioteca {
         livros.remove(livro);
     }
 
-    // ---------- Consultas para listar no console ----------
-
     public List<Livro> getLivros() {
-        return Collections.unmodifiableList(livros);   // só leitura: ninguém altera a lista por fora
+        return Collections.unmodifiableList(livros);
     }
 
     public List<Usuario> getUsuarios() {
@@ -127,9 +99,6 @@ public class Biblioteca {
         return Collections.unmodifiableList(emprestimos);
     }
 
-    // ---------- Métodos auxiliares (privados) ----------
-
-    /** Conta quantos livros o usuário está segurando agora. */
     private int contarEmprestimosAbertos(Usuario usuario) {
         int total = 0;
         for (Emprestimo e : emprestimos) {
@@ -140,7 +109,6 @@ public class Biblioteca {
         return total;
     }
 
-    /** Compara textos ignorando maiúsculas e minúsculas. */
     private boolean contem(String texto, String procurado) {
         return texto.toLowerCase().contains(procurado.toLowerCase());
     }
