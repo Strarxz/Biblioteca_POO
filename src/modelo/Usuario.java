@@ -3,15 +3,17 @@ package modelo;
 
 public abstract class Usuario {
 
+    private int id;
     private String nome;
     private String matricula;
-    private int id;
+    
 
     public Usuario(int id, String nome, String matricula) {
         this.id = id;
         this.nome = nome;
         this.matricula = matricula;
     }
+    
 
     public int getId(){
         return id;
@@ -25,7 +27,7 @@ public abstract class Usuario {
         return nome;
     }
 
-    public void SetNome(String nome){
+    public void setNome(String nome){
         this.nome = nome;
     }
 
