@@ -1,6 +1,6 @@
 package modelo;
 
-import excecoes.OperacaoInvalidaException;
+import excessoes.OperacaoInvalidaException;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
