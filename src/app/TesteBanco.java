@@ -1,7 +1,7 @@
 package app;
 
 import dao.ConexaoBanco;
-import excessoes.ErroBancoException;
+import excecoes.ErroBancoException;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

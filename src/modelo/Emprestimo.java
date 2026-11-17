@@ -1,6 +1,6 @@
 package modelo;
 
-import excessoes.OperacaoInvalidaException;
+import excecoes.OperacaoInvalidaException;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -8,14 +8,14 @@ import java.time.temporal.ChronoUnit;
 public class Emprestimo {
 
     public static final String ABERTO = "ABERTO";
-    public static final String FINALIZADO = "FINALIZADO";
+    public static final String DEVOLVIDO = "DEVOLVIDO";
 
     private int id;
     private Usuario usuario;
     private Livro livro;
     private LocalDate dataEmprestimo;
-    private LocalDate dataPrevista;
-    private LocalDate dataDevolucao; 
+    private LocalDate dataDevolucaoPrevista;
+    private LocalDate dataDevolucaoReal;
     private double valorMulta;
     private String status;
 
@@ -24,32 +24,28 @@ public class Emprestimo {
         this.usuario = usuario;
         this.livro = livro;
         this.dataEmprestimo = dataEmprestimo;
-        this.dataPrevista = dataEmprestimo.plusDays(usuario.getPrazoDias());
-        this.dataDevolucao = null;
+        this.dataDevolucaoPrevista = dataEmprestimo.plusDays(usuario.getPrazoDias());
+        this.dataDevolucaoReal = null;
         this.valorMulta = 0.0;
         this.status = ABERTO;
     }
 
     public void finalizarDevolucao(LocalDate dataAtual) throws OperacaoInvalidaException {
-        if (status.equals(FINALIZADO)) {
+        if (status.equals(DEVOLVIDO)) {
             throw new OperacaoInvalidaException("Este empréstimo já foi devolvido.");
         }
-        this.dataDevolucao = dataAtual;
-        this.valorMulta = calcularMulta(dataAtual);
-        this.status = FINALIZADO;
+        this.dataDevolucaoReal = dataAtual;
+        this.valorMulta = calcularMulta();
+        this.status = DEVOLVIDO;
     }
 
-    
-    private double calcularMulta(LocalDate dataAtual) {
-        long diasAtraso = ChronoUnit.DAYS.between(dataPrevista, dataAtual);
+    public double calcularMulta() {
+        LocalDate referencia = (dataDevolucaoReal != null) ? dataDevolucaoReal : LocalDate.now();
+        long diasAtraso = ChronoUnit.DAYS.between(dataDevolucaoPrevista, referencia);
         if (diasAtraso <= 0) {
             return 0.0;
         }
         return diasAtraso * usuario.getTaxaMultaDiaria();
-    }
-
-    public boolean isAtrasado(LocalDate hoje) {
-        return status.equals(ABERTO) && hoje.isAfter(dataPrevista);
     }
 
     public int getId() {
@@ -68,12 +64,12 @@ public class Emprestimo {
         return dataEmprestimo;
     }
 
-    public LocalDate getDataPrevista() {
-        return dataPrevista;
+    public LocalDate getDataDevolucaoPrevista() {
+        return dataDevolucaoPrevista;
     }
 
-    public LocalDate getDataDevolucao() {
-        return dataDevolucao;
+    public LocalDate getDataDevolucaoReal() {
+        return dataDevolucaoReal;
     }
 
     public double getValorMulta() {
@@ -87,6 +83,6 @@ public class Emprestimo {
     @Override
     public String toString() {
         return "Empréstimo #" + id + " - " + usuario.getNome() + " / " + livro.getTitulo()
-                + " (previsto: " + dataPrevista + ", " + status + ")";
+                + " (previsto: " + dataDevolucaoPrevista + ", " + status + ")";
     }
 }

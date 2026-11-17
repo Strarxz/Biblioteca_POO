@@ -1,9 +1,9 @@
 package modelo;
 
-import excessoes.LimiteEmprestimosException;
-import excessoes.LivroIndisponivelException;
-import excessoes.OperacaoInvalidaException;
-import excessoes.RegistroNaoEncontradoException;
+import excecoes.LimiteEmprestimosException;
+import excecoes.LivroIndisponivelException;
+import excecoes.OperacaoInvalidaException;
+import excecoes.RegistroNaoEncontradoException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

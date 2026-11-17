@@ -1,4 +1,4 @@
-package excessoes;
+package excecoes;
 
 public class ErroBancoException extends Exception {
 

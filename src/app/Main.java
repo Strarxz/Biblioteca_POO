@@ -1,9 +1,9 @@
 package app;
 
-import excessoes.LimiteEmprestimosException;
-import excessoes.LivroIndisponivelException;
-import excessoes.OperacaoInvalidaException;
-import excessoes.RegistroNaoEncontradoException;
+import excecoes.LimiteEmprestimosException;
+import excecoes.LivroIndisponivelException;
+import excecoes.OperacaoInvalidaException;
+import excecoes.RegistroNaoEncontradoException;
 import modelo.Aluno;
 import modelo.Biblioteca;
 import modelo.Emprestimo;
@@ -47,11 +47,11 @@ public class Main {
 
             System.out.println(emp1);
             System.out.println("Aluna: prazo de " + ana.getPrazoDias()
-                    + " dias, devolver até " + emp1.getDataPrevista());
+                    + " dias, devolver até " + emp1.getDataDevolucaoPrevista());
 
             System.out.println(emp2);
             System.out.println("Professor: prazo de " + carlos.getPrazoDias()
-                    + " dias, devolver até " + emp2.getDataPrevista());
+                    + " dias, devolver até " + emp2.getDataDevolucaoPrevista());
 
             System.out.println("\nExemplares depois dos empréstimos:");
             System.out.println(domCasmurro);
@@ -94,7 +94,7 @@ public class Main {
 
         System.out.println("Teste 1: aluna devolve com 3 dias de atraso");
         try {
-            double multa = biblioteca.devolver(empAna1, empAna1.getDataPrevista().plusDays(3));
+            double multa = biblioteca.devolver(empAna1, empAna1.getDataDevolucaoPrevista().plusDays(3));
             System.out.println("Multa: R$ " + String.format("%.2f", multa));
         } catch (OperacaoInvalidaException e) {
             System.out.println("Erro: " + e.getMessage());
@@ -103,7 +103,7 @@ public class Main {
 
         System.out.println("\nTeste 2: professor devolve com 3 dias de atraso");
         try {
-            double multa = biblioteca.devolver(empCarlos, empCarlos.getDataPrevista().plusDays(3));
+            double multa = biblioteca.devolver(empCarlos, empCarlos.getDataDevolucaoPrevista().plusDays(3));
             System.out.println("Multa: R$ " + String.format("%.2f", multa));
         } catch (OperacaoInvalidaException e) {
             System.out.println("Erro: " + e.getMessage());
@@ -112,7 +112,7 @@ public class Main {
 
         System.out.println("\nTeste 3: aluna devolve no prazo");
         try {
-            double multa = biblioteca.devolver(empAna2, empAna2.getDataPrevista());
+            double multa = biblioteca.devolver(empAna2, empAna2.getDataDevolucaoPrevista());
             System.out.println("Multa: R$ " + String.format("%.2f", multa));
         } catch (OperacaoInvalidaException e) {
             System.out.println("Erro: " + e.getMessage());
@@ -121,7 +121,7 @@ public class Main {
 
         System.out.println("\nTeste 4: devolver de novo o mesmo empréstimo");
         try {
-            biblioteca.devolver(empAna1, empAna1.getDataPrevista().plusDays(3));
+            biblioteca.devolver(empAna1, empAna1.getDataDevolucaoPrevista().plusDays(3));
             System.out.println("PROBLEMA: deveria ter dado erro!");
         } catch (OperacaoInvalidaException e) {
             System.out.println("Erro esperado: " + e.getMessage());
