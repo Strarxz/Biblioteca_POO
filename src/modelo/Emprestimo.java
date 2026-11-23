@@ -85,4 +85,21 @@ public class Emprestimo {
         return "Empréstimo #" + id + " - " + usuario.getNome() + " / " + livro.getTitulo()
                 + " (previsto: " + dataDevolucaoPrevista + ", " + status + ")";
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setDataDevolucaoReal(LocalDate dataDevolucaoReal) {
+        this.dataDevolucaoReal = dataDevolucaoReal;
+    }
+
+    public void setValorMulta(double valorMulta) {
+        this.valorMulta = valorMulta;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
+
