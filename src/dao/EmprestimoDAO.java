@@ -1,9 +1,5 @@
 package dao;
 
-import excecoes.ErroBancoException;
-import excecoes.LivroIndisponivelException;
-import excecoes.OperacaoInvalidaException;
-import excecoes.RegistroNaoEncontradoException;
 import modelo.Emprestimo;
 import modelo.Livro;
 import modelo.Usuario;
@@ -16,6 +12,11 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import excessoes.ErroBancoException;
+import excessoes.LivroIndisponivelException;
+import excessoes.OperacaoInvalidaException;
+import excessoes.RegistroNaoEncontradoException;
 
 public class EmprestimoDAO {
 

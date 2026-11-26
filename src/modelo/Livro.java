@@ -1,6 +1,6 @@
 package modelo;
 
-import excecoes.LivroIndisponivelException;
+import excessoes.LivroIndisponivelException;
 
 public class Livro {
 

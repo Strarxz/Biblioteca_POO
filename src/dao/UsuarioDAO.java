@@ -1,8 +1,5 @@
 package dao;
 
-import excecoes.ErroBancoException;
-import excecoes.OperacaoInvalidaException;
-import excecoes.RegistroNaoEncontradoException;
 import modelo.Aluno;
 import modelo.Emprestimo;
 import modelo.Professor;
@@ -15,6 +12,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import excessoes.ErroBancoException;
+import excessoes.OperacaoInvalidaException;
+import excessoes.RegistroNaoEncontradoException;
 
 public class UsuarioDAO {
 

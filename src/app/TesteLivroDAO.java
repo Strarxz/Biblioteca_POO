@@ -2,9 +2,9 @@ package app;
 
 import dao.ConexaoBanco;
 import dao.LivroDAO;
-import excecoes.ErroBancoException;
-import excecoes.OperacaoInvalidaException;
-import excecoes.RegistroNaoEncontradoException;
+import excessoes.ErroBancoException;
+import excessoes.OperacaoInvalidaException;
+import excessoes.RegistroNaoEncontradoException;
 import modelo.Emprestimo;
 import modelo.Livro;
 

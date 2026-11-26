@@ -1,4 +1,4 @@
-package excecoes;
+package excessoes;
 
 public class RegistroNaoEncontradoException extends Exception {
 
