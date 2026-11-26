@@ -45,3 +45,31 @@ public class EmprestimoDAO {
                         throw new LivroIndisponivelException("Não há exemplares disponíveis de \"" + livro.getTitulo() + "\".");
                     }
                 }
+
+
+                int idGerado;
+                try (PreparedStatement psEmp = c.prepareStatement(sqlInserir, Statement.RETURN_GENERATED_KEYS)) {
+                    psEmp.setInt(1, usuario.getId());
+                    psEmp.setInt(2, livro.getId());
+                    psEmp.setString(3, novo.getDataEmprestimo().toString());
+                    psEmp.setString(4, novo.getDataDevolucaoPrevista().toString());
+                    psEmp.setString(5, Emprestimo.ABERTO);
+                    psEmp.executeUpdate();
+
+                    try (ResultSet chaves = psEmp.getGeneratedKeys()) {
+                        chaves.next();
+                        idGerado = chaves.getInt(1);
+                    }
+                }
+
+                c.commit();
+                return new Emprestimo(idGerado, usuario, livro, hoje);
+
+            } catch (SQLException e) {
+                c.rollback();
+                throw e;
+            }
+        } catch (SQLException e) {
+            throw new ErroBancoException("Erro ao registrar o empréstimo.", e);
+        }
+    }
