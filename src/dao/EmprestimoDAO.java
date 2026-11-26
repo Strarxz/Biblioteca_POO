@@ -46,7 +46,6 @@ public class EmprestimoDAO {
                     }
                 }
 
-
                 int idGerado;
                 try (PreparedStatement psEmp = c.prepareStatement(sqlInserir, Statement.RETURN_GENERATED_KEYS)) {
                     psEmp.setInt(1, usuario.getId());
@@ -73,3 +72,77 @@ public class EmprestimoDAO {
             throw new ErroBancoException("Erro ao registrar o empréstimo.", e);
         }
     }
+    
+    public double registrarDevolucao(Emprestimo emprestimo, LocalDate dataDevolucao)
+            throws ErroBancoException, OperacaoInvalidaException {
+
+        emprestimo.finalizarDevolucao(dataDevolucao);
+
+        String sqlDevolucao = "UPDATE emprestimo SET data_devolucao = ?, valor_multa = ?, status = ? WHERE id = ?";
+        String sqlSubirEstoque = "UPDATE livro SET quantidade_exemplares = quantidade_exemplares + 1 WHERE id = ?";
+
+        try (Connection c = ConexaoBanco.getConexao()) {
+            c.setAutoCommit(false);
+
+            try {
+                try (PreparedStatement psEmp = c.prepareStatement(sqlDevolucao)) {
+                    psEmp.setString(1, emprestimo.getDataDevolucaoReal().toString());
+                    psEmp.setDouble(2, emprestimo.getValorMulta());
+                    psEmp.setString(3, emprestimo.getStatus());
+                    psEmp.setInt(4, emprestimo.getId());
+                    psEmp.executeUpdate();
+                }
+
+                try (PreparedStatement psLivro = c.prepareStatement(sqlSubirEstoque)) {
+                    psLivro.setInt(1, emprestimo.getLivro().getId());
+                    psLivro.executeUpdate();
+                }
+
+                c.commit();
+                return emprestimo.getValorMulta();
+
+            } catch (SQLException e) {
+                c.rollback();
+                throw e;
+            }
+        } catch (SQLException e) {
+            throw new ErroBancoException("Erro ao registrar a devolução.", e);
+        }
+    }
+    
+    public List<Emprestimo> listarAbertos() throws ErroBancoException {
+        List<Emprestimo> abertos = new ArrayList<>();
+        String sql = "SELECT * FROM emprestimo WHERE status = ? ORDER BY id";
+
+        try (Connection c = ConexaoBanco.getConexao();
+             PreparedStatement ps = c.prepareStatement(sql)) {
+            ps.setString(1, Emprestimo.ABERTO);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Usuario usuario = usuarioDAO.buscarPorId(rs.getInt("usuario_id"));
+                    Livro livro = livroDAO.buscarPorId(rs.getInt("livro_id"));
+
+                    LocalDate dataEmp = LocalDate.parse(rs.getString("data_emprestimo"));
+                    LocalDate dataPrev = LocalDate.parse(rs.getString("data_prevista"));
+                    String dataDevTexto = rs.getString("data_devolucao");
+                    LocalDate dataDev = (dataDevTexto != null) ? LocalDate.parse(dataDevTexto) : null;
+
+                    abertos.add(new Emprestimo(
+                            rs.getInt("id"),
+                            usuario,
+                            livro,
+                            dataEmp,
+                            dataPrev,
+                            dataDev,
+                            rs.getDouble("valor_multa"),
+                            rs.getString("status")));
+                }
+            }
+        } catch (SQLException | RegistroNaoEncontradoException e) {
+            throw new ErroBancoException("Erro ao listar empréstimos em aberto.", e);
+        }
+
+        return abertos;
+    }
+}
