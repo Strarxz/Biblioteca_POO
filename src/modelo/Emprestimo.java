@@ -19,15 +19,17 @@ public class Emprestimo {
     private double valorMulta;
     private String status;
 
-    public Emprestimo(int id, Usuario usuario, Livro livro, LocalDate dataEmprestimo) {
+    public Emprestimo(int id, Usuario usuario, Livro livro,
+                      LocalDate dataEmprestimo, LocalDate dataDevolucaoPrevista,
+                      LocalDate dataDevolucaoReal, double valorMulta, String status) {
         this.id = id;
         this.usuario = usuario;
         this.livro = livro;
         this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucaoPrevista = dataEmprestimo.plusDays(usuario.getPrazoDias());
-        this.dataDevolucaoReal = null;
-        this.valorMulta = 0.0;
-        this.status = ABERTO;
+        this.dataDevolucaoPrevista = dataDevolucaoPrevista;
+        this.dataDevolucaoReal = dataDevolucaoReal;
+        this.valorMulta = valorMulta;
+        this.status = status;
     }
 
     public void finalizarDevolucao(LocalDate dataAtual) throws OperacaoInvalidaException {
