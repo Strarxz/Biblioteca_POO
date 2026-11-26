@@ -83,7 +83,7 @@ public class TesteLivroDAO {
         }
     }
 
-    // Enquanto o EmprestimoDAO não existe, o empréstimo de teste é gravado direto no banco.
+    
     private static int criarEmprestimoAberto(int livroId) throws ErroBancoException, SQLException {
         try (Connection c = ConexaoBanco.getConexao()) {
             int usuarioId;
